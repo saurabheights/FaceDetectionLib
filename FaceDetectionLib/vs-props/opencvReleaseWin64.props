@@ -11,7 +11,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(LIB_OPENCV_DIR)\install\x64\vc12\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_videoio310.lib;opencv_core310.lib;opencv_highgui310.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_videoio310.lib;opencv_core310.lib;opencv_highgui310.lib;opencv_imgproc310d.lib;opencv_objdetect310d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
