@@ -4,26 +4,34 @@
 
 cv::CascadeClassifier faceDetector;
 double scaleFactor = 1.05;
-int minNeighbors = 3;
+int minNeighbors = 1;
 int flags = 0;
 cv::Size minFaceSize(30, 30);
+double GROUP_EPS = 0.2;
 
 cv::Mat detectFace(cv::Mat frame) {
 	cv::Mat gray(frame.size(), CV_8UC1);
-	cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+	cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY); //Not needed, detectMultiScale takes care of conversion of conversion to grayscale.
 
 	std::vector<cv::Rect> faceDetected;
-	faceDetector.detectMultiScale(gray, faceDetected, scaleFactor, minNeighbors, flags, minFaceSize);
+	faceDetector.detectMultiScale(gray, faceDetected, scaleFactor, 0, flags, minFaceSize);
+	
+	std::vector<int> numDetections;
+	cv::groupRectangles(faceDetected, numDetections, minNeighbors, GROUP_EPS);
 
-	for each (cv::Rect rect in faceDetected)
+	for (unsigned int i = 0; i < faceDetected.size(); i++) {
+		cv::Rect rect = faceDetected.at(i);
 		cv::rectangle(frame, rect, cv::Scalar(0, 0, 255), 1);
+		cv::putText(frame, std::to_string(numDetections[i]),
+			cv::Point(rect.x, rect.y), 1, 1, cv::Scalar(0, 0, 255));
+	}
 
 	return frame;
 }
 
 int main()
 {
-	if (!faceDetector.load("haarcascade_frontalface_alt_tree.xml")) {
+	if (!faceDetector.load("resources/haarcascade_frontalface_alt_tree.xml")) {
 		std::cout << "Failed to load classifier" << std::endl;
 		getchar();
 		return -1;
@@ -34,7 +42,7 @@ int main()
 	
 	char key;
 	cv::namedWindow("Camera_Output", 1);    //Create window
-	while (1){ //Create infinte loop for live streaming
+	while (true){ //Create infinte loop for live streaming
 		cv::Mat frame;
 		capture >> frame; //Create image frames from capture
 

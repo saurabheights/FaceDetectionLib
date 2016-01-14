@@ -82,7 +82,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
@@ -120,7 +120,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="openCVHelloWorld.cpp" />
+    <ClCompile Include="FaceDetectionTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="resources\haarcascade_frontalface_alt.xml" />
+    <Xml Include="resources\haarcascade_frontalface_alt2.xml" />
+    <Xml Include="resources\haarcascade_frontalface_alt_tree.xml" />
+    <Xml Include="resources\haarcascade_frontalface_default.xml" />
+    <Xml Include="resources\lbpcascade_frontalface.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
